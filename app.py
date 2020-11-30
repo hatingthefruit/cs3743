@@ -41,27 +41,6 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/book/<isbn>")
-def getBookInfo(isbn):
-    # open connection to database
-    tempConn = sqlite3.connect("app.db")
-    tempCursor = tempConn.cursor()
-
-    # select the book for this page
-    book = tempCursor.execute(
-        f'SELECT * FROM BOOKS WHERE ISBN ="{isbn}";').fetchone()
-
-    # Find the names of the branches and the number of the book available at each
-    branches = tempCursor.execute(f"""SELECT B.BNAME, COUNT(*)
-        FROM (
-            SELECT *
-            FROM STORES_B S JOIN BOOKS B ON S.ISBN = B.ISBN
-        ) AS B_TO_P JOIN BRANCHES B ON B.BID=B_TO_P.BID
-        WHERE B_TO_P.ISBN='{isbn}'
-        GROUP BY B.BID, B_TO_P.ISBN;""").fetchall()
-    return render_template("book.html", book=book, branches=branches)
-
-
 @app.route("/branches")
 def allBranches():
     # open connection to database
@@ -115,6 +94,27 @@ def searchBooks():
             WHERE S.ISBN='{book[0]}' AND S.BID=B.BID
             );""").fetchall()
     return render_template("search_book.html", items=items, keyword=request.form["keyword"], bids=bids)
+
+
+@app.route("/book/<isbn>")
+def getBookInfo(isbn):
+    # open connection to database
+    tempConn = sqlite3.connect("app.db")
+    tempCursor = tempConn.cursor()
+
+    # select the book for this page
+    book = tempCursor.execute(
+        f'SELECT * FROM BOOKS WHERE ISBN ="{isbn}";').fetchone()
+
+    # Find the names of the branches and the number of the book available at each
+    branches = tempCursor.execute(f"""SELECT B.BNAME, COUNT(*)
+        FROM (
+            SELECT *
+            FROM STORES_B S JOIN BOOKS B ON S.ISBN = B.ISBN
+        ) AS B_TO_P JOIN BRANCHES B ON B.BID=B_TO_P.BID
+        WHERE B_TO_P.ISBN='{isbn}'
+        GROUP BY B.BID, B_TO_P.ISBN;""").fetchall()
+    return render_template("book.html", book=book, branches=branches)
 
 
 @ app.route("/periodicals/bybranch")
@@ -288,7 +288,6 @@ def updateCustInfo(username):
     tempCursor = tempConn.cursor()
     custInfo = tempCursor.execute(
         f"""SELECT * FROM CUSTOMERS WHERE UNAME='{username}';""").fetchone()
-    print(custInfo)
     return render_template("update.html", username=username, custInfo=custInfo)
 
 

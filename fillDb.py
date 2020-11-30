@@ -10,7 +10,7 @@ meta = json.load(open("gutenberg-metadata.json"))
 conn = sqlite3.connect("app.db")
 dbCursor = conn.cursor()
 
-"""for book in range(100):
+for book in range(100):
     bookNum = random.randrange(500)
     book = meta[str(bookNum)]
     isbn = f"{bookNum: 010}"
@@ -64,7 +64,6 @@ for book in books:
             f"insert into stores_b (isbn, bindex, bid) values ('{book[0]}', {i}, '{bids[random.randrange(3)]}');")
 
 
-
 pnames = ["ABSTRACTS OF FOLKLORE STUDIES",
           "AMERICAN DIALECT SOCIETY. PUBLICATIONS", "AMERICAN LITERATURE"]
 months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
@@ -76,7 +75,7 @@ for name in pnames:
         for year in years:
             dbCursor.execute(
                 f"Insert into periodicals (pname, pedition, pgenre, ptype, dds, psubject) values ('{name}', '{month + str(year)}', 'American Lit.', 'magazine', '200.10', 'American Lit.')")
-                
+
 periods = dbCursor.execute(
     "select pname, pedition from periodicals ;").fetchall()
 bids = ["DTN", "WES", "EAS", "CEN"]
@@ -88,7 +87,6 @@ for period in periods:
                 f"insert into stores_p (pname, pedition, bid) values ('{period[0]}', '{period[1]}', '{bid}');")
         except:
             print("Had an exception")
-            """
 
 books = dbCursor.execute("Select isbn, bindex from stores_b;").fetchmany(20)
 unames = ['user1', 'user2']
