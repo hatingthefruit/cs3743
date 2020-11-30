@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+
+<body>
+
+    <div class='container-fluid jumbotron mt-5'>
+        <div class='row mx-4 '>
+            <h1> {{ username }} </h1>
+        </div>
+        <div class='row mx-5'>
+            Card no: {{ custInfo[1] }}
+        </div>
+    </div>
+
+    <div class='container-fluid '>
+        <div class='row ml-5'>
+            <div class='card-deck-wrapper'>
+                <div class='card-deck'>
+                    <div class='card'>
+                        <div class='card-header'>
+                            Contact info
+                        </div>
+                        <div class='card-body'>
+                            <p class="card-text">
+                                {% set address = custInfo[3].split(", ", 1) %}
+                                {{ address[0] }}<br>
+                                {{ address[1] }}
+                            </p>
+                            <p class='card-text'>
+                                {{ custInfo[2] }}<br>
+                                {{ custInfo[5]}}
+                            </p>
+                            <a href='/customer/update/{{ username }}' class='card-link'>Update</a>
+                        </div>
+                    </div>
+                    <div class='card'>
+                        <div class='card-header'>Status</div>
+                        <div class='card-body'>
+                            <p class='card-text'>
+                                {% if custInfo[6] == "GOOD" %}
+                                You are in good standing
+                                {% else %}
+                                You have overdue books
+                                {% endif %}
+                            </p>
+                            <p class='card-text'>
+                                {% if custInfo[7] != None %}
+                                Fines: $ {{ custInfo[7] }}
+                            <form action='/customer/pay/{{ username }}' method="POST">
+                                <label for='amount'>Pay amount:</label>
+                                <input type="text" class='form-control' id='amount' name='amount'>
+                                <button type="submit" class='btn btn-primary'>Pay</button>
+                            </form>
+                            {% else %}
+                            Fines: $0
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='row ml-5 pt-5'>
+            <form action='/customer/renew/{{ username }}' method="POST">
+                <table class='table table-striped'>
+                    <tr>
+                        <th>Renew</th>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Renewals Remaining</th>
+                    </tr>
+                    {% for book in books %}
+                    <tr>
+                        <td><input type='checkbox' name="renew{{ book[5] }}" id="renew{{ book[5] }}"></td>
+                        <td>{{ book[5] }}</td>
+                        <td>{{ book[6] }}</td>
+                        <td>{{ book[4] }}</td>
+                        <td>{{ book[3] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                <button type="submit" class="btn btn-primary">Renew selected</button>
+                <button type="submit" class="btn btn-primary" formaction="/customer/renewall/{{ username }}">Renew
+                    all</button>
+            </form>
+        </div>
+    </div>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

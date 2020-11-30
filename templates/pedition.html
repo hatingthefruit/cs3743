@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <img src={{ url_for('static', filename='periodical.svg') }} class="img-fluid"></img>
+            </div>
+            <div class="col-md-6">
+                <p>
+                <h3>{{ edition[0] }} ({{ edition[1] }})</h3>
+                </p>
+                <table class='table'>
+                    <tr>
+                        <th>Genre</th>
+                        <th>Type</th>
+                        <th>DDS No.</th>
+                        <th>Subject</th>
+                    </tr>
+                    <tr>
+                        {% for item in edition[2:] %}
+                        <td>{{ item }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <h2>Availability:</h2>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <tr>
+                    <th>Branch</th>
+                </tr>
+                {% for each in branches %}
+
+                <tr>
+                    <td><a href="/branches">{{ each[0] }}</a></td>
+                </tr>
+                {% endfor %}
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

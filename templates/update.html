@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+
+<body>
+
+    <div class='container-fluid jumbotron mt-5'>
+        <div class='row mx-4 '>
+            <h1> Update {{ username }} </h1>
+        </div>
+    </div>
+
+    {% set address = custInfo[3].split(", ", 1) %}
+    <div class='container mx-4'>
+        <form action="/customer/update/handle/{{ username }}" method="POST">
+            <div class='form-group row'>
+                <label for='card' class='px-auto'>Card Number:</label>
+                <input type="text" class='form-control' id='card' name='card' value="{{ custInfo[1] }}">
+            </div>
+            <div class='form-group row'>
+                <label for='email' class='px-auto'>Email:</label>
+                <input type="text" class='form-control' id='email' name='email' value="{{ custInfo[2] }}">
+            </div>
+            <div class='form-group row'>
+                <label for='add1' class='px-auto'>Address line 1:</label>
+                <input type="text" class='form-control' id='add1' name='add1' value="{{ address[0] }}">
+            </div>
+            <div class='form-group row'>
+                <label for='add2' class='px-auto'>Address line 2:</label>
+                <input type="text" class='form-control' id='add2' name='add2' value="{{ address[1] }}">
+            </div>
+            <div class='form-group row'>
+                <label for='phone' class='px-auto'>Phone Number:</label>
+                <input type="text" class='form-control' id='phone' name='phone' value="{{ custInfo[5] }}">
+            </div>
+            <div class='form-group row'>
+                <label for='dob' class='px-auto'>Date of Birth:</label>
+                <input type="date" class='form-control' id='dob' name='dob' value="{{ custInfo[4] }}">
+            </div>
+            <div class='form-group'>
+                <button type="submit" class='btn btn-primary'>Update information</button>
+            </div>
+        </form>
+    </div>
+    <!-- jQuery library -->
+    <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
